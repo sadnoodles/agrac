@@ -25,8 +25,64 @@ python 版本。支持以下功能：
 3. 返回是可以用点方法获取的json对象
 
 
-例子：
+## Examples：
 
+### Without Output:
+
+```python
+In [1]: from agrac.client import Client
+
+In [2]: c=Client('https://httpbin.org/')
+
+# patch
+# curl -X PATCH "https://httpbin.org/patch" -H "accept: application/json"
+In [3]: c['patch'].patch()
+
+
+# post with data
+# curl -X POST "https://httpbin.org/post" -H "accept: application/json"
+In [4]: c['post'].post(a=12,b=23)
+
+
+
+# get
+# curl -X GET "https://httpbin.org/get" -H "accept: application/json"
+In [5]: c['get'].get()
+
+
+# path
+# curl -X POST "https://httpbin.org/delay/1" -H "accept: application/json"
+In [8]: c['/delay/1'].post(a=33) # equal to c['delay']['1'].post(a=33)
+
+# path also can be stored
+In [9]: delay = c['/delay']
+In [10]: delay[1].post()
+
+
+
+# login: HTTP Basic Auth.
+# curl -X GET "https://httpbin.org/basic-auth/aaa/bbb" -H "accept: application/json"
+
+In [1]: from agrac.client import Client
+In [2]: c=Client('https://httpbin.org/')
+In [4]: c.set_auth('aaa','bbb')
+In [5]: c["/basic-auth/aaa/bbb"].get()
+
+
+
+# login: REST
+from agrac.client import Client
+c=Client('http://192.168.1.1/')
+c.login('admin', 'admin', longin_url='/base/login/)
+
+# auto next page.
+for i in c['tags'].iter_pages(page=1,size=10):
+    print(i)
+
+
+```
+
+### With output:
 
 ```ipython
 In [1]: from agrac.client import Client
