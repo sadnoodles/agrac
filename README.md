@@ -1,6 +1,7 @@
 # Agrac
 Another Generic REST API Client
 
+## 功能
 
 调用类一样调用REST API
 
@@ -20,7 +21,7 @@ python 版本。支持以下功能：
 
 1. 方括号[]用来定义URL，可以无限往下调用
     a. 也可以直接使用路径
-2. 圆括号()用来定义参数，get是查询参数，update/post/create是数据
+2. 圆括号()用来定义参数，get()里的是查询参数，update/post/create()里的是数据
 3. 返回是可以用点方法获取的json对象
 
 
@@ -120,5 +121,28 @@ Out[10]:
   'X-Amzn-Trace-Id': 'Root=1-615418c0-2ecb57be5fe2f2ae5a310790'},
  'origin': '61.150.12.145',
  'url': 'https://httpbin.org/delay/1'}
+
+
+# login: HTTP Basic Auth.
+# curl -X GET "https://httpbin.org/basic-auth/aaa/bbb" -H "accept: application/json"
+
+In [1]: from agrac.client import Client
+
+In [2]: c=Client('https://httpbin.org/')
+
+In [4]: c.set_auth('aaa','bbb')
+In [5]: c["/basic-auth/aaa/bbb"].get()
+
+Out[5]: {'authenticated': True, 'user': 'aaa'}
+
+# login: REST
+from agrac.client import Client
+c=Client('http://192.168.1.1/')
+c.login('admin', 'admin', longin_url='/base/login/)
+
+# auto next page.
+for i in c['tags'].iter_pages(page=1,size=10):
+    print(i)
+
 
 ```
