@@ -1,9 +1,11 @@
-# Agrac | [中文](./README_cn.md)
+# Agrac
 Another Generic REST API Client
 
-## Features
+## 功能
 
-Human interface for calling REST APIs of a web site.
+调用类一样调用REST API
+
+python 版本。支持以下功能：
 
 1. 登录
 2. 会话
@@ -23,9 +25,9 @@ Human interface for calling REST APIs of a web site.
 3. 返回是可以用点方法获取的json对象
 
 
-## Examples：
+## 例子：
 
-### Without Output:
+### 不带输出，可以看到非常简洁:
 
 ```python
 In [1]: from agrac.client import Client
@@ -48,17 +50,17 @@ In [4]: c['post'].post(a=12,b=23)
 In [5]: c['get'].get()
 
 
-# path
+# 路径
 # curl -X POST "https://httpbin.org/delay/1" -H "accept: application/json"
 In [8]: c['/delay/1'].post(a=33) # equal to c['delay']['1'].post(a=33)
 
-# path also can be stored
+# 路径也可以被存储
 In [9]: delay = c['/delay']
 In [10]: delay[1].post()
 
 
 
-# login: HTTP Basic Auth.
+# 登录: HTTP 基础认证.
 # curl -X GET "https://httpbin.org/basic-auth/aaa/bbb" -H "accept: application/json"
 
 In [1]: from agrac.client import Client
@@ -68,19 +70,19 @@ In [5]: c["/basic-auth/aaa/bbb"].get()
 
 
 
-# login: REST
+# 登录: REST接口
 from agrac.client import Client
 c=Client('http://192.168.1.1/')
 c.login('admin', 'admin', longin_url='/base/login/)
 
-# auto next page.
+# 自动翻页.
 for i in c['tags'].iter_pages(page=1,size=10):
     print(i)
 
 
 ```
 
-### With output:
+### 带输出的:
 
 ```ipython
 In [1]: from agrac.client import Client
