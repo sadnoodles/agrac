@@ -112,7 +112,7 @@ class PageIterMinxin:
                     kwargs[self.parent.PAGE_NUM_PARAM] = self.page_num
                     if self.page_num > max_page:
                         break
-                    self.ret = self.parent.get(**kwargs).json()
+                    self.ret = self.parent.get(**kwargs)
                     for i in self.ret[self.parent.PAGE_RESULT_PARAM]:
                         yield i
 
