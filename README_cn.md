@@ -1,11 +1,11 @@
 # Agrac
-Another Generic REST API Client
+通用 REST API 客户端
 
 ## 功能
 
-调用类一样调用REST API
+调用类一样调用一个网站的REST API。
 
-python 版本。支持以下功能：
+支持以下功能：
 
 1. 登录
 2. 会话

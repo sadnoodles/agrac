@@ -5,23 +5,21 @@ Another Generic REST API Client
 
 Human interface for calling REST APIs of a web site.
 
-1. 登录
-2. 会话
-3. 重试
-4. 相同的URL前缀，无需反复书写
-5. 相同模式汇总
-6. CRUD自动化
-7. 自动翻页
-9. Django REST 开箱即用
+1. Login
+2. Session
+3. Retry
+4. Save URL path for reuse.
+5. Pattern reuse.
+6. CRUD included.
+7. Automatically goto next page.
+9. Django REST native support.
 
 
-规则：
+Rules：
 
-1. 方括号[]用来定义URL，可以无限往下调用
-    a. 也可以直接使用路径
-2. 圆括号()用来定义参数，get()里的是查询参数，update/post/create()里的是数据
-3. 返回是可以用点方法获取的json对象
-
+1. `[]` for URL path.
+2. `()` for get() params, or update/post/create() data.
+3. `.` operator for json data.
 
 ## Examples：
 
