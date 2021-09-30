@@ -56,16 +56,26 @@ class BaseClient(object):
 class BasicAuthMixin:
 
     AUTH_HEAD = 'Authorization'
+    AUTH_METHOD_PREFIX = 'Basic'
+
     def set_auth(self, username, password):
         base64str = base64.urlsafe_b64encode(('%s:%s'%( username, password)).encode())
-        self.set_auth_header("Basic %s"%base64str.decode())
+        self.set_auth_header(base64str.decode())
 
-    def set_auth_header(self, auth_str):
-        self.session.headers[self.AUTH_HEAD] = auth_str
+    def format_auth_str(self, auth_str):
+        return "%s %s"%(self.AUTH_METHOD_PREFIX, auth_str)
+
+    def set_raw_auth_header(self, auth_str, header=None):
+        self.session.headers[header or self.AUTH_HEAD] = auth_str
+
+    def set_auth_header(self, auth_str, header=None):
+        self.set_raw_auth_header(self.format_auth_str(auth_str), header)
 
 class TokenAuthMixin(BasicAuthMixin):
+    AUTH_METHOD_PREFIX = 'Token'
+    
     def set_auth(self, token):
-        self.set_auth_header("Token %s"%token)
+        self.set_auth_header(token)
     
 class LoginMixin:
     
@@ -110,7 +120,7 @@ class PageIterMinxin:
 
                 while self.ret is None or self.ret[self.parent.PAGE_NEXT_PARAM]:
                     kwargs[self.parent.PAGE_NUM_PARAM] = self.page_num
-                    if self.page_num > max_page:
+                    if (max_page is not None) and self.page_num > max_page:
                         break
                     self.ret = self.parent.get(**kwargs)
                     for i in self.ret[self.parent.PAGE_RESULT_PARAM]:
