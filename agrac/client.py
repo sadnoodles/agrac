@@ -19,7 +19,8 @@ class BaseClient(object):
         return clone
 
     def filter(self, **params):
-        clone = self.clone(params=params)
+        clone = self.clone()
+        clone.params.update(params)
         return clone
 
     def clone(self, **kwargs):
@@ -39,7 +40,7 @@ class BaseClient(object):
         return self.handle_resp(self.session.patch(self.base_url, json=data, params=self.params))
 
     def put(self, **data):
-        return self.handle_resp(self.session.put(self.base_url, json=data, params=self._params))
+        return self.handle_resp(self.session.put(self.base_url, json=data, params=self.params))
 
     def delete(self, **params):
         return self.handle_resp(self.session.delete(self.base_url, params=params))
