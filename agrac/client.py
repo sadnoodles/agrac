@@ -52,7 +52,7 @@ class BaseClient(object):
     __call__ = get
     retrieve = get
     create = post
-    update = post
+    update = patch
 
 class BasicAuthMixin:
 
